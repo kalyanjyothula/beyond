@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const userReducer = createSlice({
-  name: "user",
+  name: 'user',
   initialState: {
-    userData: "",
+    userData: '',
   },
   reducers: {
     getUser() {},
