@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { AiOutlineHeart, AiOutlineMenu, AiOutlineUser } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
-function Header(props) {
+function Header({ customStyles }) {
   const [dropDownOpen, setDropDownOpen] = useState(false);
-  const { customStyles } = props;
 
   const handleOpenDropDown = () => {
     setDropDownOpen((prev) => !prev);
@@ -17,10 +16,10 @@ function Header(props) {
         customStyles ? customStyles : ''
       } `}
     >
-      <h1 className='text-title px-6 onlyMobile:px-4  uppercase font-one text-primaryGreen '>
+      <h1 className='text-title px-6 onlyMobile:px-2  uppercase font-one text-[#FDFFFE] '>
         Beyond
       </h1>
-      <div className='flex items-center px-4 gap-x-1'>
+      <div className='flex items-center px-4 gap-x-1 backdrop-brightness-100'>
         <Link
           to='/fav-trips'
           className='onlyMobile:hidden flex px-2 justify-between items-center text-white cursor-pointer'
@@ -47,7 +46,10 @@ function Header(props) {
             <Link className='block text-body3 capitalize py-1' to='/log-in'>
               Log In
             </Link>
-            <Link className='hidden onlyMobile:block text-body3 capitalize py-1' to='/fav-trips'>
+            <Link
+              className='hidden onlyMobile:block text-body3 capitalize py-1'
+              to='/fav-trips'
+            >
               ♥ Trips
             </Link>
           </div>
@@ -57,6 +59,8 @@ function Header(props) {
   );
 }
 
-Header.propTypes = {};
+Header.propTypes = {
+  customStyles: PropTypes.string,
+};
 
 export default Header;

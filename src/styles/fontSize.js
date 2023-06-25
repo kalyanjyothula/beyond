@@ -119,6 +119,14 @@ module.exports = {
       letterSpacing: letterSpacing.normal,
     },
   ],
+  body4: [
+    '12px',
+    {
+      lineHeight: '24px',
+      fontWeight: fontVariants.regular,
+      letterSpacing: letterSpacing.normal,
+    },
+  ],
   caption: [
     '13px',
     {

@@ -1,7 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import { getUser } from './reducer';
+// import { getUser } from './reducer';
 import HomePage from '../HomePage';
 // import MainPage from "../MainPage";
 // import ItemView from "../ItemView";
@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // import "./App.css";
 
 function App() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // useEffect(() => {
   //   dispatch(getUser());
   // }, []);

@@ -2,7 +2,7 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 import { getUser, setUser } from './reducer';
 import axios from 'axios';
 
-export function* getUserSaga(action) {
+export function* getUserSaga() {
   try {
     const url = 'https://jsonplaceholder.typicode.com/users';
     const { data } = yield call(axios, { method: 'GET', url });

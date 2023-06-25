@@ -1,8 +1,9 @@
 import React from 'react';
+// eslint-disable-next-line no-unused-vars
 import PropTypes from 'prop-types';
 import homePageData from './../../data/homepage';
 
-function HeroBanner(props) {
+function HeroBanner() {
   const { image } = homePageData.heroBanner;
   return (
     <div
