@@ -28,7 +28,7 @@ function TripCard({
       </p>
       <div className='px-2 pt-2 pb-4 absolute bottom-0 flex justify-between w-full'>
         <div className='flex items-center gap-x-1'>
-          <AiFillLike className='h-5 w-5 text-primaryBlue' />
+          <AiFillLike className='h-5 w-5 text-[#FD9022]' />
           <p className='text-body font-ubuntu'>{likesCount}</p>
         </div>
         <div>

@@ -11,7 +11,6 @@ import './slick-custom.css';
 function HomePage() {
   const { tripCards } = homePageData;
   const categoryKeys = Object.keys(tripCards);
-  console.log(categoryKeys);
   const settings = {
     speed: 300,
     infinite: false,
@@ -58,105 +57,57 @@ function HomePage() {
           </form>
         </div>
       </div>
-      {categoryKeys?.flatMap((item) => (
-        <div
-          className='px-10 py-1 onlyMobile:px-4 bg-primaryBackground'
-          key={item}
-        >
-          <div className='py-2'>
-            <h1 className='text-h7 font-one'>{tripCards[`${item}`].title}</h1>
-            <p className='text-body pb-4 font-ubuntu'>
-              {tripCards[item].description}
-            </p>
-            <div className='relative'>
-              <Slider {...settings}>
-                {tripCards[item].data.map(
-                  ({ id, image, title, description, likesCount, review }) => (
-                    <TripCard
-                      key={id}
-                      image={image}
-                      title={title}
-                      description={description}
-                      likesCount={likesCount}
-                      reviewCount={review}
-                      customStyles='2xl:max-w-[98%] lg:max-w-[98%] mb-4 min-h-[388px]'
-                    />
-                  ),
-                )}
-              </Slider>
+      <div className='bg-primaryBackground pb-20'>
+        {categoryKeys?.flatMap((item) => (
+          <div
+            className='px-10 py-1 onlyMobile:px-4 bg-primaryBackground'
+            key={item}
+          >
+            <div className='py-2'>
+              <h1 className='text-h7 font-one'>{tripCards[`${item}`].title}</h1>
+              <p className='text-body pb-4 font-ubuntu'>
+                {tripCards[item].description}
+              </p>
+              <div className='relative'>
+                <Slider {...settings}>
+                  {tripCards[item]?.data?.map(
+                    ({ id, image, title, description, likesCount, review }) => (
+                      <TripCard
+                        key={id}
+                        image={image}
+                        title={title}
+                        description={description}
+                        likesCount={likesCount}
+                        reviewCount={review}
+                        customStyles='2xl:max-w-[96%] lg:max-w-[96%] mb-4 min-h-[388px]'
+                      />
+                    ),
+                  )}
+                </Slider>
+              </div>
             </div>
+            {tripCards[item].banner && (
+              <div
+                className={`min-h-[100px] w-full  my-10 rounded-md ${
+                  tripCards[item].banner?.color
+                    ? tripCards[item].banner?.color
+                    : 'bg-greenBackground'
+                }`}
+              >
+                <h1
+                  className='text-h7 text-white font-one 
+                  w-full py-6 px-10'
+                >
+                  {tripCards[item].banner?.title}
+                  <span className='text-body3 block text-right pr-2'>
+                    - Team Beyond
+                  </span>
+                </h1>
+              </div>
+            )}
           </div>
-        </div>
-      ))}
-      {/* <div className='px-10 py-1 onlyMobile:px-4 bg-slate-100'>
-        <div className='py-2'>
-          <h1 className='text-h7'>{nature.title}</h1>
-          <p className='text-body pb-4'>{nature.description}</p>
-          <div className='relative'>
-            <Slider {...settings}>
-              {nature.data.map(
-                ({ id, image, title, description, likesCount, review }) => (
-                  <TripCard
-                    key={id}
-                    image={image}
-                    title={title}
-                    description={description}
-                    likesCount={likesCount}
-                    reviewCount={review}
-                    customStyles='2xl:max-w-[98%] lg:max-w-[98%] mb-4 min-h-[388px]'
-                  />
-                ),
-              )}
-            </Slider>
-          </div>
-        </div>
+        ))}
       </div>
-      <div className='px-10 py-1 onlyMobile:px-4 bg-slate-100'>
-        <div className='py-2'>
-          <h1 className='text-h7'>{water.title}</h1>
-          <p className='text-body pb-4'>{water.description}</p>
-          <div className='relative'>
-            <Slider {...settings}>
-              {water.data.map(
-                ({ id, image, title, description, likesCount, review }) => (
-                  <TripCard
-                    key={id}
-                    image={image}
-                    title={title}
-                    description={description}
-                    likesCount={likesCount}
-                    reviewCount={review}
-                    customStyles='2xl:max-w-[98%] lg:max-w-[98%] mb-4 min-h-[388px]'
-                  />
-                ),
-              )}
-            </Slider>
-          </div>
-        </div>
-      </div>
-      <div className='px-10 py-1 onlyMobile:px-4 bg-slate-100'>
-        <div className='py-2'>
-          <h1 className='text-h7'>{devotion.title}</h1>
-          <p className='text-body pb-4'>{devotion.description}</p>
-          <div className='relative'>
-            <Slider {...settings}>
-              {devotion.data.map(
-                ({ id, image, title, description, likesCount, review }) => (
-                  <TripCard
-                    key={id}
-                    image={image}
-                    title={title}
-                    description={description}
-                    likesCount={likesCount}
-                    reviewCount={review}
-                    customStyles='2xl:max-w-[98%] lg:max-w-[98%] mb-4 min-h-[388px]'
-                  />
-                ),
-              )}
-            </Slider>
-          </div>
-        </div>
-      </div> */}
       <Footer />
     </div>
   );
