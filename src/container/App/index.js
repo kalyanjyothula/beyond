@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 // import { getUser } from './reducer';
 import HomePage from '../HomePage';
-// import MainPage from "../MainPage";
+import LoginPage from '../LoginPage';
 // import ItemView from "../ItemView";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,8 +19,8 @@ function App() {
     <React.Fragment>
       <Routes>
         <Route path='/' element={<HomePage />}></Route>
-        {/* <Route path="/app" element={<MainPage />}></Route>
-        <Route path="/itemView/:id" element={<ItemView />}></Route> */}
+        <Route path='/login' element={<LoginPage />}></Route>
+        {/* <Route path="/itemView/:id" element={<ItemView />}></Route> */}
       </Routes>
       <ToastContainer />
     </React.Fragment>

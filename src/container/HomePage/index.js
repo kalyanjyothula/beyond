@@ -41,7 +41,7 @@ function HomePage() {
         className='bg-heroBannerGradient w-full h-[70vh] 
       bg-no-repeat bg-center bg-cover flex flex-col'
       >
-        <Header />
+        <Header isTextWhite />
         <div className='flex items-center justify-center h-full'>
           <form
             className='flex h-16 bg-white items-center 

@@ -7,4 +7,6 @@ module.exports = {
   blueBackground:
     'linear-gradient(90deg, rgba(2,17,134,1) 0%, rgba(3,25,150,1) 26%, rgba(1,19,74,1) 70%);',
   brownBackground: `linear-gradient(90deg, rgba(134,47,2,1) 0%, rgba(164,108,5,1) 26%, rgba(74,31,1,1) 70%);`,
+  loginBackground: '#23395B',
+  cardGreen: `linear-gradient(360deg, rgba(3,100,3,1) 0%, rgba(1,104,18,1) 24%, rgba(2,74,1,1) 70%);`,
 };
