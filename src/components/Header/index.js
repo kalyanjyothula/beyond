@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { AiOutlineHeart, AiOutlineMenu, AiOutlineUser } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
-function Header({ customStyles, isTextWhite }) {
+function Header({ customStyles, isTextWhite, hideSignUp, hideLogin }) {
   const [dropDownOpen, setDropDownOpen] = useState(false);
 
   const handleOpenDropDown = () => {
@@ -16,14 +16,16 @@ function Header({ customStyles, isTextWhite }) {
         customStyles ? customStyles : ''
       } `}
     >
-      <h1
+      <Link
         className={`text-title px-6 onlyMobile:px-2  uppercase font-one ${
           isTextWhite ? 'text-[#FDFFFE]' : 'text-primaryGreen'
         }`}
+        to='/'
       >
         Beyond
-      </h1>
+      </Link>
       <div className='flex items-center px-4 gap-x-1 backdrop-brightness-100'>
+        {}{' '}
         <Link
           to='/fav-trips'
           className={`onlyMobile:hidden flex px-2 justify-between items-center cursor-pointer ${
@@ -48,12 +50,16 @@ function Header({ customStyles, isTextWhite }) {
                   dropDownOpen ? `block z-[999]` : `hidden`
                 }`}
           >
-            <Link className='block text-body3 capitalize py-1' to='/signup'>
-              Sign Up
-            </Link>
-            <Link className='block text-body3 capitalize py-1' to='/login'>
-              Log In
-            </Link>
+            {!hideSignUp && (
+              <Link className='block text-body3 capitalize py-1' to='/signup'>
+                Sign Up
+              </Link>
+            )}
+            {!hideLogin && (
+              <Link className='block text-body3 capitalize py-1' to='/login'>
+                Log In
+              </Link>
+            )}
             <Link
               className='hidden onlyMobile:block text-body3 capitalize py-1'
               to='/fav-trips'
@@ -70,6 +76,8 @@ function Header({ customStyles, isTextWhite }) {
 Header.propTypes = {
   customStyles: PropTypes.string,
   isTextWhite: PropTypes.bool,
+  hideLogin: PropTypes.bool,
+  hideSignUp: PropTypes.bool,
 };
 
 export default Header;

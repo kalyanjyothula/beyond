@@ -7,6 +7,7 @@ import LoginPage from '../LoginPage';
 // import ItemView from "../ItemView";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SignupPage from '../SignupPage';
 // import "./App.css";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage />}></Route>
         <Route path='/login' element={<LoginPage />}></Route>
+        <Route path='/signup' element={<SignupPage />}></Route>
         {/* <Route path="/itemView/:id" element={<ItemView />}></Route> */}
       </Routes>
       <ToastContainer />

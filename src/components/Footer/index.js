@@ -5,7 +5,7 @@ import { FaFacebookF, FaTwitter, FaRegCopyright } from 'react-icons/fa';
 
 function Footer() {
   const { questions } = homePageData.footer;
-  console.log(questions);
+  // console.log(questions);
   return (
     <div>
       <div className='bg-secondaryBackground grid grid-cols-3 gap-x-4 gap-y-2 px-10 onlyMobile:px-4 py-20'>
