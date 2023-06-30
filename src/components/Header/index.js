@@ -47,7 +47,7 @@ function Header({ customStyles, isTextWhite, hideSignUp, hideLogin }) {
           <div
             className={`absolute top-[43px] -right-[10px] min-w-[150px] transition-all duration-500 ease-in-out
                 shadow-md py-2 px-4 bg-white  text-black border rounded-md ${
-                  dropDownOpen ? `block z-[999]` : `hidden`
+                  dropDownOpen ? `block z-50` : `hidden`
                 }`}
           >
             {!hideSignUp && (
@@ -56,7 +56,10 @@ function Header({ customStyles, isTextWhite, hideSignUp, hideLogin }) {
               </Link>
             )}
             {!hideLogin && (
-              <Link className='block text-body3 capitalize py-1' to='/login'>
+              <Link
+                className='block text-body3 bg-white capitalize py-1'
+                to='/login'
+              >
                 Log In
               </Link>
             )}

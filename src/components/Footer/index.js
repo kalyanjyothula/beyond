@@ -8,7 +8,7 @@ function Footer() {
   // console.log(questions);
   return (
     <div>
-      <div className='bg-secondaryBackground grid grid-cols-3 gap-x-4 gap-y-2 px-10 onlyMobile:px-4 py-20'>
+      <div className='bg-secondaryBackground grid grid-cols-3 gap-x-4 gap-y-2 px-10 onlyMobile:px-4 py-20 onlyMobile:grid-cols-1'>
         {questions.map(({ id, title, description }) => (
           <div className='p-2' key={id}>
             <h1 className='text-h7 font-ubuntu pb-4'>{title}</h1>
@@ -19,7 +19,7 @@ function Footer() {
         ))}
       </div>
       <div className='flex justify-between px-10 onlyMobile:px-4 py-16 bg-black items-center'>
-        <div className='flex gap-x-8'>
+        <div className='flex gap-x-8 onlyMobile:gap-x-4'>
           <FaTwitter className='h-8 w-8 text-white' />
           <FaFacebookF className='h-8 w-8 text-white' />
         </div>

@@ -8,5 +8,5 @@ module.exports = {
   full: '100%',
   mobile: { max: '1023px' },
   minDesktop: { min: '1200px' },
-  onlyMobile: { max: '768px' },
+  onlyMobile: { max: '767px' },
 };

@@ -64,7 +64,9 @@ function HomePage() {
             key={item}
           >
             <div className='py-2'>
-              <h1 className='text-h7 font-one'>{tripCards[`${item}`].title}</h1>
+              <h1 className='text-h7 font-one capitalize'>
+                {tripCards[`${item}`].title}
+              </h1>
               <p className='text-body pb-4 font-ubuntu'>
                 {tripCards[item].description}
               </p>
