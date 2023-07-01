@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SignupPage from '../SignupPage';
 import FavTripPage from '../FavTripPage';
+import SearchResultPage from '../SearchResultPage';
 // import "./App.css";
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
         <Route path='/login' element={<LoginPage />}></Route>
         <Route path='/signup' element={<SignupPage />}></Route>
         <Route path='/fav-trips' element={<FavTripPage />}></Route>
+        <Route path='/search/:key' element={<SearchResultPage />}></Route>
+        <Route path='*' element={<div>404 Not Found</div>}></Route>
         {/* <Route path="/itemView/:id" element={<ItemView />}></Route> */}
       </Routes>
       <ToastContainer />

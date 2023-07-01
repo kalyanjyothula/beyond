@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { AiOutlineHeart, AiOutlineMenu, AiOutlineUser } from 'react-icons/ai';
+import { FiSearch } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
-function Header({ customStyles, isTextWhite, hideSignUp, hideLogin }) {
+function Header({
+  customStyles,
+  isTextWhite,
+  hideSignUp,
+  hideLogin,
+  showSearch,
+}) {
   const [dropDownOpen, setDropDownOpen] = useState(false);
 
   const handleOpenDropDown = () => {
@@ -12,20 +19,43 @@ function Header({ customStyles, isTextWhite, hideSignUp, hideLogin }) {
 
   return (
     <div
-      className={`h-20 px-4 flex items-center justify-between bg-transparent ${
+      className={`h-20 px-4 flex items-center justify-between bg-transparent relative ${
         customStyles ? customStyles : ''
       } `}
     >
       <Link
         className={`text-title px-6 onlyMobile:px-2  uppercase font-one ${
           isTextWhite ? 'text-[#FDFFFE]' : 'text-primaryGreen'
-        }`}
+        } ${showSearch ? 'onlyMobile:hidden' : ''}`}
         to='/'
       >
         Beyond
       </Link>
+      {showSearch && (
+        <Link
+          className={`text-title px-6 onlyMobile:px-2  uppercase font-one ${
+            isTextWhite ? 'text-[#FDFFFE]' : 'text-primaryGreen'
+          } ${showSearch ? 'onlyMobile:block hidden' : ''}`}
+          to='/'
+        >
+          B
+        </Link>
+      )}
+      {showSearch && (
+        <form
+          className='flex h-16 bg-white items-center border 
+          rounded-[45px] w-[50%] onlyMobile:w-[80%] px-4 gap-x-4 overflow-hidden'
+        >
+          <FiSearch className='h-6 w-6' />
+          <input
+            type='text'
+            name='location'
+            placeholder='Where to ?'
+            className='h-full w-full focus:outline-none text-h8'
+          />
+        </form>
+      )}
       <div className='flex items-center px-4 gap-x-1 backdrop-brightness-100'>
-        {}{' '}
         <Link
           to='/fav-trips'
           className={`onlyMobile:hidden flex px-2 justify-between items-center cursor-pointer ${
@@ -44,33 +74,33 @@ function Header({ customStyles, isTextWhite, hideSignUp, hideLogin }) {
         >
           <AiOutlineMenu className='h-6 w-6 ' />
           <AiOutlineUser className='h-6 w-6 ' />
-          <div
-            className={`absolute top-[43px] -right-[10px] min-w-[150px] transition-all duration-500 ease-in-out
-                shadow-md py-2 px-4 bg-white  text-black border rounded-md ${
-                  dropDownOpen ? `block z-50` : `hidden`
-                }`}
-          >
-            {!hideSignUp && (
-              <Link className='block text-body3 capitalize py-1' to='/signup'>
-                Sign Up
-              </Link>
-            )}
-            {!hideLogin && (
-              <Link
-                className='block text-body3 bg-white capitalize py-1'
-                to='/login'
-              >
-                Log In
-              </Link>
-            )}
-            <Link
-              className='hidden onlyMobile:block text-body3 capitalize py-1'
-              to='/fav-trips'
-            >
-              ♥ Trips
-            </Link>
-          </div>
         </div>
+      </div>
+      <div
+        className={`absolute top-[64px] right-[40px] min-w-[150px] transition-all duration-500 ease-in-out
+                shadow-md py-2 px-4 bg-white  text-black border rounded-md ${
+                  dropDownOpen ? `block !z-50` : `hidden`
+                }`}
+      >
+        {!hideSignUp && (
+          <Link className='block text-body3 capitalize py-1' to='/signup'>
+            Sign Up
+          </Link>
+        )}
+        {!hideLogin && (
+          <Link
+            className='block text-body3 bg-white capitalize py-1'
+            to='/login'
+          >
+            Log In
+          </Link>
+        )}
+        <Link
+          className='hidden onlyMobile:block text-body3 capitalize py-1'
+          to='/fav-trips'
+        >
+          ♥ Trips
+        </Link>
       </div>
     </div>
   );
@@ -81,6 +111,7 @@ Header.propTypes = {
   isTextWhite: PropTypes.bool,
   hideLogin: PropTypes.bool,
   hideSignUp: PropTypes.bool,
+  showSearch: PropTypes.bool,
 };
 
 export default Header;
