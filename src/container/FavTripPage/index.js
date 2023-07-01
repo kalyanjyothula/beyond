@@ -1,10 +1,13 @@
 import React from 'react';
-import Header from '../../components/Header';
 import favtripData from '../../data/favTripspage';
-import Footer from '../../components/Footer';
 import Slider from 'react-slick';
-import TripCard from '../../components/TripCard';
-import FavTripCard from '../../components/FavTripCard';
+import {
+  TripCard,
+  FavTripCard,
+  Footer,
+  Header,
+} from '../../components/Organism';
+
 // import PropTypes from 'prop-types';
 
 function FavTripPage() {

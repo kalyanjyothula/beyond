@@ -1,13 +1,13 @@
 import React from 'react';
-import Header from '../../components/Header';
 import favTripPageData from '../../data/favTripspage';
-import FavTripCard from '../../components/FavTripCard';
 import SearchResultData from '../../data/searchResultPage';
-import Footer from '../../components/Footer';
-import RadioGroup from '../../components/Molecules/RadioGroup';
-import RangeSlider from '../../components/Molecules/RangeSlider';
-import Select from '../../components/Molecules/Select';
-import CheckBox from '../../components/Molecules/CheckBox';
+import { Footer, FavTripCard, Header } from '../../components/Organism';
+import {
+  CheckBox,
+  Select,
+  RadioGroup,
+  RangeSlider,
+} from '../../components/Molecules';
 // import PropTypes from 'prop-types';
 
 function SearchResultPage() {
@@ -19,7 +19,7 @@ function SearchResultPage() {
       <div className='flex gap-x-2 py-4'>
         <div
           className='basis-[220px] drop-shadow-lg 
-        my-4 shadow-lg rounded-lg h-fit p-4 border'
+        my-4 shadow-lg rounded-lg h-fit p-4 border onlyMobile:hidden'
         >
           <div>
             {filters.map(({ id, title, filter }) => (

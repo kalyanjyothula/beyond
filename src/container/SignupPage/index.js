@@ -1,10 +1,8 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
-import { InputField } from '../../components/Molecules';
-import Button from '../../components/Molecules/Button';
+import { Header, Footer } from '../../components/Organism';
+import { InputField, Button } from '../../components/Molecules';
 import {
   GrGoogle,
   GrInstagram,

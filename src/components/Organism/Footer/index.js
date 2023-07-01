@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import homePageData from './../../data/homepage';
+import homePageData from '../../../data/homepage';
 import { FaFacebookF, FaTwitter, FaRegCopyright } from 'react-icons/fa';
 
 function Footer() {

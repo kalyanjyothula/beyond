@@ -2,9 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { FiSearch } from 'react-icons/fi';
 import Slider from 'react-slick';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
-import TripCard from '../../components/TripCard';
+import { TripCard, Header, Footer } from '../../components/Organism';
 import homePageData from './../../data/homepage';
 import './slick-custom.css';
 

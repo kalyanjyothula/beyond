@@ -1,15 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
-import { InputField } from '../../components/Molecules';
-import Button from '../../components/Molecules/Button';
+import { Header, Footer } from '../../components/Organism';
 import {
   GrGoogle,
   GrInstagram,
   GrLinkedinOption,
   GrGithub,
 } from 'react-icons/gr';
+import { InputField, Button } from '../../components/Molecules';
 // import PropTypes from 'prop-types';
 
 function LoginPage() {
