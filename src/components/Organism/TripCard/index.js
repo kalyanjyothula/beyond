@@ -1,6 +1,7 @@
 import React from 'react';
-import { AiOutlineHeart, AiFillLike } from 'react-icons/ai';
+import { AiFillLike, AiFillHeart } from 'react-icons/ai';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 function TripCard({
   image,
@@ -9,17 +10,29 @@ function TripCard({
   likesCount,
   reviewCount,
   customStyles,
+  path,
+  addFavorite,
+  isFavorite,
+  // id,
 }) {
   return (
-    <div
-      className={`relative shadow-lg w-full lg:max-w-[320px] 2xl:max-w-[30%] overflow-hidden rounded-lg ${
+    <Link
+      to={`${path}`}
+      className={`block relative shadow-lg w-full lg:max-w-[320px] 2xl:max-w-[30%] overflow-hidden rounded-lg ${
         customStyles ? customStyles : ''
       }`}
     >
       <div className='relative h-[256px]'>
         <img src={image} alt='image' className='object-cover h-full w-full' />
-        <div className='absolute right-3 top-3'>
-          <AiOutlineHeart className='h-8 w-8 cursor-pointer text-white' />
+        <div
+          className='absolute right-3 top-3 cursor-pointer'
+          onClick={addFavorite}
+        >
+          <AiFillHeart
+            className={`h-8 w-8 cursor-pointer stroke-[4px] ${
+              isFavorite ? 'fill-red-600' : 'fill-slate-300 '
+            }`}
+          />
         </div>
       </div>
       <h1 className='text-h9 pt-1 px-2 line-clamp-2 font-ubuntu '>{title}</h1>
@@ -35,7 +48,7 @@ function TripCard({
           <p className='text-body3 font-ubuntu'>{reviewCount} reviews</p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -46,6 +59,10 @@ TripCard.propTypes = {
   likesCount: PropTypes.number.isRequired,
   reviewCount: PropTypes.number.isRequired,
   customStyles: PropTypes.string,
+  path: PropTypes.string.isRequired,
+  addFavorite: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  isFavorite: PropTypes.bool.isRequired,
 };
 
 export default TripCard;

@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import { FiSearch } from 'react-icons/fi';
 import Slider from 'react-slick';
 import { TripCard, Header, Footer } from '../../components/Organism';
 import homePageData from './../../data/homepage';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import './slick-custom.css';
+import { addToFavoriteTrip, homePageSelector } from './reducer';
 
 function HomePage() {
   const { tripCards } = homePageData;
@@ -33,6 +36,29 @@ function HomePage() {
       },
     ],
   };
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [searchText, setSearchText] = useState('');
+
+  const { favoriteTrips } = useSelector(homePageSelector);
+
+  const handleSearchTextChange = (e) => {
+    e.stopPropagation();
+    const { value } = e.target;
+    setSearchText(value);
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/search/${searchText}`);
+  };
+
+  const handleAddFavorite = (e, id) => {
+    e.preventDefault();
+    console.log('Add Favorite', id);
+    dispatch(addToFavoriteTrip(id));
+  };
+
   return (
     <div>
       <div
@@ -42,6 +68,7 @@ function HomePage() {
         <Header isTextWhite />
         <div className='flex items-center justify-center h-full'>
           <form
+            onSubmit={handleOnSubmit}
             className='flex h-16 bg-white items-center 
           rounded-[45px] w-[50%] onlyMobile:w-[80%] px-4 gap-x-4 overflow-hidden'
           >
@@ -49,6 +76,8 @@ function HomePage() {
             <input
               type='text'
               name='location'
+              value={searchText}
+              onChange={handleSearchTextChange}
               placeholder='Where to ?'
               className='h-full w-full focus:outline-none text-h8'
             />
@@ -74,11 +103,15 @@ function HomePage() {
                     ({ id, image, title, description, likesCount, review }) => (
                       <TripCard
                         key={id}
+                        path={'/trip/' + id.split('/').join('-')}
                         image={image}
                         title={title}
                         description={description}
                         likesCount={likesCount}
                         reviewCount={review}
+                        id={id}
+                        isFavorite={favoriteTrips.includes(id)}
+                        addFavorite={(e) => handleAddFavorite(e, id)}
                         customStyles='2xl:max-w-[96%] lg:max-w-[96%] mb-4 min-h-[388px]'
                       />
                     ),
