@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Header, Footer } from '../../components/Organism';
 import {
@@ -8,9 +8,57 @@ import {
   GrGithub,
 } from 'react-icons/gr';
 import { InputField, Button } from '../../components/Molecules';
+import homePageData from '../../data/homepage';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { userLogin } from './reducer';
+import { useGoogleLogin } from '@react-oauth/google';
+import { googleLoginInfo } from '../App/reducer';
 // import PropTypes from 'prop-types';
 
 function LoginPage() {
+  const { loginQuote } = homePageData;
+  const [loginInfo, setLoginInfo] = useState({
+    email: '',
+    password: '',
+  });
+
+  const dispatch = useDispatch();
+
+  const handleInputChange = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setLoginInfo((prev) => ({ ...prev, [name]: value }));
+    console.log(loginInfo);
+  };
+
+  const handleOauthClick = (e) => {
+    e.preventDefault();
+    toast.info('This option is disabled.');
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    const { email, password } = loginInfo;
+    dispatch(
+      userLogin({
+        email: email,
+        password: password,
+      }),
+    );
+  };
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: (response) => {
+      dispatch(googleLoginInfo(response));
+      // navigate('/');
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error('Google Login Failed !');
+    },
+  });
+
   return (
     <div className='bg-[#001B2E]'>
       <Header customStyles='' isTextWhite hideLogin />
@@ -21,8 +69,7 @@ function LoginPage() {
         >
           <div className='flex-1 bg-blue-600 flex items-center justify-center '>
             <h1 className='text-h4 px-20 text-white font-one mobile:py-4 onlyMobile:text-h9'>
-              Unlock a world of endless adventures with just a click, as you
-              embark on a captivating journey through our travel portal
+              {loginQuote}
             </h1>
           </div>
           <div className='flex-1 py-4 mobile:basis-1/2 flex flex-col'>
@@ -36,21 +83,24 @@ function LoginPage() {
             <h1 className='text-h8 text-center font-ubuntu pt-4'>
               Login to Your Account
             </h1>
-            <div
+            <form
               className='flex flex-col px-10  
             py-4 gap-y-4 items-center justify-center w-full '
+              onSubmit={handleOnSubmit}
             >
               <InputField
                 type='text'
                 name='email'
                 label='Email'
                 placeholder='Enter Email'
+                onChange={handleInputChange}
               />
               <InputField
                 type='password'
                 name='password'
                 label='Password'
                 placeholder='Enter Password'
+                onChange={handleInputChange}
               />
               <div className='self-end'>
                 <Link
@@ -72,21 +122,25 @@ function LoginPage() {
                 <GrGoogle
                   className='h-10 w-12 text-blue-400 
                 shadow-md p-2 rounded-md cursor-pointer'
+                  onClick={() => handleGoogleLogin()}
                 />
                 <GrInstagram
                   className='h-10 w-12 text-pink-500 
                 shadow-md p-2 rounded-md cursor-pointer'
+                  onClick={handleOauthClick}
                 />
                 <GrLinkedinOption
                   className='h-10 w-12 text-blue-600 
                 shadow-md p-2 rounded-md cursor-pointer'
+                  onClick={handleOauthClick}
                 />
                 <GrGithub
                   className='h-10 w-12
                 shadow-md p-2 rounded-md cursor-pointer'
+                  onClick={handleOauthClick}
                 />
               </div>
-            </div>
+            </form>
             <div className='pt-10 text-center justify-self-end'>
               <p className='text-body2 font-ubuntu'>
                 {`Don't you have account ? `}

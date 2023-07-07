@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Header, Footer } from '../../components/Organism';
 import { InputField, Button } from '../../components/Molecules';
 import {
@@ -9,8 +9,59 @@ import {
   GrLinkedinOption,
   GrGithub,
 } from 'react-icons/gr';
+import homePageData from '../../data/homepage';
+import { useDispatch } from 'react-redux';
+import { createAccount } from './reducer';
+import { useGoogleLogin } from '@react-oauth/google';
+import { toast } from 'react-toastify';
+import { googleLoginInfo } from '../App/reducer';
 
 function SignupPage() {
+  const { signupQuote } = homePageData;
+  const [loginInfo, setLoginInfo] = useState({
+    email: '',
+    password: '',
+    mobile: '',
+  });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleOauthClick = (e) => {
+    e.preventDefault();
+    toast.info('This option is disabled.');
+  };
+
+  const handleInputChange = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setLoginInfo((prev) => ({ ...prev, [name]: value }));
+    console.log(loginInfo);
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    const { email, password, mobile } = loginInfo;
+    dispatch(
+      createAccount({
+        email: email,
+        password: password,
+        mobile: mobile.slice(0, 10),
+      }),
+    );
+  };
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: (response) => {
+      dispatch(googleLoginInfo(response));
+      navigate('/');
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error('Google Login Failed !');
+    },
+  });
+
   return (
     <div className='bg-[#001B2E]'>
       <Header customStyles='' isTextWhite hideSignUp />
@@ -21,8 +72,7 @@ function SignupPage() {
         >
           <div className='flex-1 bg-blue-600 flex items-center justify-center '>
             <h1 className='text-h4 px-20 text-white font-one mobile:py-4 onlyMobile:text-h9'>
-              Embark on your wanderlust-filled odyssey today and unlock a realm
-              of incredible destinations by joining our travel community.
+              {signupQuote}
             </h1>
           </div>
           <div className='flex-1 py-4 mobile:basis-1/2 flex flex-col'>
@@ -36,31 +86,39 @@ function SignupPage() {
             <h1 className='text-h8 text-center font-ubuntu pt-4'>
               Create Your Account
             </h1>
-            <div
+            <form
               className='flex flex-col px-10  
         py-4 gap-y-4 items-center justify-center w-full '
+              onSubmit={handleOnSubmit}
             >
               <InputField
                 type='text'
                 name='email'
                 label='Email'
                 placeholder='Enter Email'
+                value={loginInfo.email}
+                onChange={handleInputChange}
               />
               <InputField
                 type='password'
                 name='password'
                 label='Password'
+                value={loginInfo.password}
                 placeholder='Enter Password'
+                onChange={handleInputChange}
               />
               <InputField
-                type='text'
+                type='number'
                 name='mobile'
                 label='Mobile'
                 placeholder='Enter Mobile Number'
+                value={loginInfo.mobile.slice(0, 10)}
+                onChange={handleInputChange}
+                maxLength='10'
               />
 
               <Button
-                type='button'
+                type='submit'
                 name='signup'
                 text='signup'
                 height='40px'
@@ -71,21 +129,25 @@ function SignupPage() {
                 <GrGoogle
                   className='h-10 w-12 text-blue-400 
             shadow-md p-2 rounded-md cursor-pointer'
+                  onClick={() => handleGoogleLogin()}
                 />
                 <GrInstagram
                   className='h-10 w-12 text-pink-500 
             shadow-md p-2 rounded-md cursor-pointer'
+                  onClick={handleOauthClick}
                 />
                 <GrLinkedinOption
                   className='h-10 w-12 text-blue-600 
             shadow-md p-2 rounded-md cursor-pointer'
+                  onClick={handleOauthClick}
                 />
                 <GrGithub
                   className='h-10 w-12
             shadow-md p-2 rounded-md cursor-pointer'
+                  onClick={handleOauthClick}
                 />
               </div>
-            </div>
+            </form>
             <div className='pt-10 text-center justify-self-end'>
               <p className='text-body2 font-ubuntu'>
                 {`Already have Account ? `}

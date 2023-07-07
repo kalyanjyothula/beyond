@@ -6,13 +6,16 @@ import App from './container/App';
 import reportWebVitals from './reportWebVitals';
 import store from './store/configureStore';
 import { BrowserRouter } from 'react-router-dom';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <App />
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
+          <App />
+        </GoogleOAuthProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

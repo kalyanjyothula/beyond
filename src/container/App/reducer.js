@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const userReducer = createSlice({
-  name: 'user',
+  name: 'app',
   initialState: {
     userData: '',
   },
@@ -11,9 +11,14 @@ const userReducer = createSlice({
       const userData = action.payload;
       return { ...state, ...userData };
     },
+    googleLoginInfo(state, { payload }) {
+      return { ...state, googleLoginInfo: payload };
+    },
   },
 });
 
-export const { getUser, setUser } = userReducer.actions;
+export const { getUser, setUser, googleLoginInfo } = userReducer.actions;
+
+export const appSelector = (state) => state.app;
 
 export default userReducer.reducer;
