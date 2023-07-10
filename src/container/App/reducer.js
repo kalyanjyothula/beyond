@@ -3,13 +3,19 @@ import { createSlice } from '@reduxjs/toolkit';
 const userReducer = createSlice({
   name: 'app',
   initialState: {
-    userData: '',
+    userInfo: '',
+    isAuthenticated: false,
+    loading: false,
   },
   reducers: {
-    getUser() {},
-    setUser(state, action) {
-      const userData = action.payload;
-      return { ...state, ...userData };
+    getUserInfo(state) {
+      return { ...state, loading: true, isAuthenticated: false };
+    },
+    getUserInfoFail(state) {
+      return { ...state, loading: false, isAuthenticated: false}
+    },
+    setUserInfo(state, { payload }) {
+      return { ...state, userInfo: payload, isAuthenticated: true, loading: false };
     },
     googleLoginInfo(state, { payload }) {
       return { ...state, googleLoginInfo: payload };
@@ -17,7 +23,8 @@ const userReducer = createSlice({
   },
 });
 
-export const { getUser, setUser, googleLoginInfo } = userReducer.actions;
+export const { getUserInfo, setUserInfo, googleLoginInfo, getUserInfoFail } =
+  userReducer.actions;
 
 export const appSelector = (state) => state.app;
 

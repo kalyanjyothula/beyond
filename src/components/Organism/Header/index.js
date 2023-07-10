@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { AiOutlineHeart, AiOutlineMenu, AiOutlineUser } from 'react-icons/ai';
 import { FiSearch } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { appSelector } from '../../../container/App/reducer';
 
 function Header({
   customStyles,
@@ -16,6 +18,7 @@ function Header({
   const handleOpenDropDown = () => {
     setDropDownOpen((prev) => !prev);
   };
+  const {  isAuthenticated} = useSelector(appSelector)
 
   return (
     <div
@@ -82,19 +85,26 @@ function Header({
                   dropDownOpen ? `block !z-50` : `hidden`
                 }`}
       >
-        {!hideSignUp && (
-          <Link className='block text-body3 capitalize py-1' to='/signup'>
-            Sign Up
+        {isAuthenticated ? 
+          <Link className='block text-body3 capitalize py-1' to='/profile'>
+             Profile
           </Link>
-        )}
-        {!hideLogin && (
-          <Link
-            className='block text-body3 bg-white capitalize py-1'
-            to='/login'
-          >
-            Log In
-          </Link>
-        )}
+          :
+        <React.Fragment>
+          {!hideSignUp && (
+            <Link className='block text-body3 capitalize py-1' to='/signup'>
+              Sign Up
+            </Link>
+          )}
+          {!hideLogin && (
+            <Link
+              className='block text-body3 bg-white capitalize py-1'
+              to='/login'
+            >
+              Log In
+            </Link>
+          )}
+        </React.Fragment>}
         <Link
           className='hidden onlyMobile:block text-body3 capitalize py-1'
           to='/fav-trips'

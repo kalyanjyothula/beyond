@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Header, Footer } from '../../components/Organism';
 import {
@@ -10,11 +10,12 @@ import {
 import { InputField, Button } from '../../components/Molecules';
 import homePageData from '../../data/homepage';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from './reducer';
 import { useGoogleLogin } from '@react-oauth/google';
-import { googleLoginInfo } from '../App/reducer';
+import { appSelector, googleLoginInfo } from '../App/reducer';
 // import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
   const { loginQuote } = homePageData;
@@ -24,12 +25,18 @@ function LoginPage() {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const { isAuthenticated } =useSelector(appSelector)
+
+  useEffect(() => {
+    if(isAuthenticated)  navigate('/')
+  },[isAuthenticated])
 
   const handleInputChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
     setLoginInfo((prev) => ({ ...prev, [name]: value }));
-    console.log(loginInfo);
+    // console.log(loginInfo);
   };
 
   const handleOauthClick = (e) => {

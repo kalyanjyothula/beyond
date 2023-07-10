@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { Header, Footer } from '../../components/Organism';
@@ -10,11 +10,11 @@ import {
   GrGithub,
 } from 'react-icons/gr';
 import homePageData from '../../data/homepage';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createAccount } from './reducer';
 import { useGoogleLogin } from '@react-oauth/google';
 import { toast } from 'react-toastify';
-import { googleLoginInfo } from '../App/reducer';
+import { appSelector, googleLoginInfo } from '../App/reducer';
 
 function SignupPage() {
   const { signupQuote } = homePageData;
@@ -24,8 +24,16 @@ function SignupPage() {
     mobile: '',
   });
 
+  const { isAuthenticated} = useSelector(appSelector)
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(isAuthenticated) {
+      navigate('/')
+    }
+  }, [isAuthenticated])
 
   const handleOauthClick = (e) => {
     e.preventDefault();
@@ -36,7 +44,6 @@ function SignupPage() {
     e.preventDefault();
     const { name, value } = e.target;
     setLoginInfo((prev) => ({ ...prev, [name]: value }));
-    console.log(loginInfo);
   };
 
   const handleOnSubmit = (e) => {

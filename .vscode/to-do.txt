@@ -1,0 +1,8 @@
+send header authorization code to favTrips api -
+modify the authMiddleware as per call -
+add & delete fav trips api calls
+
+--- Trip Page -- 
+
+fetch favtrips api call  [ similarities & recommendations data in single call]
+fetch favtrips client side actions

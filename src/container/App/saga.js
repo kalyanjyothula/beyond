@@ -1,15 +1,22 @@
-import { takeLatest, call, put } from 'redux-saga/effects';
-import { getUser, setUser } from './reducer';
-import axios from 'axios';
+import { takeLatest, call, put } from "redux-saga/effects";
+import { getUserInfo, getUserInfoFail, setUserInfo } from "./reducer";
+import axios from "axios";
 
 export function* getUserSaga() {
   try {
-    const url = 'https://jsonplaceholder.typicode.com/users';
-    const { data } = yield call(axios, { method: 'GET', url });
-    yield put(setUser({ ...data }));
+    const url = "/api/user/getMe";
+    const {
+      data: { success, mobile, email, token, id },
+    } = yield call(axios, { method: "GET", url });
+    if (success) {
+      yield put(
+        setUserInfo({ mobile: mobile, email: email, token: token, id: id })
+      );
+    } else yield put(getUserInfoFail());
   } catch (error) {
     console.log(error);
+    yield put(getUserInfoFail());
   }
 }
 
-export const AppSaga = [takeLatest(getUser.type, getUserSaga)];
+export const AppSaga = [takeLatest(getUserInfo.type, getUserSaga)];

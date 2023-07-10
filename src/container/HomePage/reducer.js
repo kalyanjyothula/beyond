@@ -1,13 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+/* eslint-disable no-unused-vars */
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   favoriteTrips: [],
 };
 
 const homePageReducer = createSlice({
-  name: 'homePage',
+  name: "homePage",
   initialState: initialState,
   reducers: {
+    getFavoriteTrips(state, action) {
+      console.log("called getFavoriteTrips");
+    },
+    getFavoriteTripsSuccess(state, { payload }) {
+      return { ...state, favoriteTrips: [...payload.trips] };
+    },
+    getFavoriteTripsFail(state, { payload }) {
+      return { ...state };
+    },
     addToFavoriteTrip(state, { payload }) {
       if (!state.favoriteTrips.includes(payload)) {
         state.favoriteTrips.push(payload);
@@ -20,8 +30,13 @@ const homePageReducer = createSlice({
   },
 });
 
-export const { addToFavoriteTrip } = homePageReducer.actions;
+export const {
+  addToFavoriteTrip,
+  getFavoriteTrips,
+  getFavoriteTripsFail,
+  getFavoriteTripsSuccess,
+} = homePageReducer.actions;
 
-export const homePageSelector = (state) => state.homePage; // name of the homePageReducer
+export const homePageSelector = (state) => state.homePage; // name of the reducer in store
 
 export default homePageReducer.reducer;

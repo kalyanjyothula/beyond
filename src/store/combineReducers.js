@@ -5,7 +5,7 @@ import signupPageReducer from '../container/SignupPage/reducer';
 import loginPageReducer from '../container/LoginPage/reducer';
 
 export const reducer = combineReducers({
-  user: userReducer,
+  app: userReducer,
   homePage: homePageReducer,
   signupPage: signupPageReducer,
   loginPage: loginPageReducer,
