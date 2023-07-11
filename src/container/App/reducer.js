@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const userReducer = createSlice({
-  name: 'app',
+  name: "app",
   initialState: {
-    userInfo: '',
+    userInfo: "",
     isAuthenticated: false,
     loading: false,
   },
@@ -12,19 +12,52 @@ const userReducer = createSlice({
       return { ...state, loading: true, isAuthenticated: false };
     },
     getUserInfoFail(state) {
-      return { ...state, loading: false, isAuthenticated: false}
+      return { ...state, loading: false, isAuthenticated: false };
     },
     setUserInfo(state, { payload }) {
-      return { ...state, userInfo: payload, isAuthenticated: true, loading: false };
+      return {
+        ...state,
+        userInfo: payload,
+        isAuthenticated: true,
+        loading: false,
+        errorMsg: "",
+      };
+    },
+    userLogOut(state) {
+      return { ...state, errorMsg: "" };
     },
     googleLoginInfo(state, { payload }) {
-      return { ...state, googleLoginInfo: payload };
+      return { ...state, googleLoginInfo: payload, errorMsg: "" };
+    },
+    googleLoginInfoSuccess(state, { payload }) {
+      return {
+        ...state,
+        userInfo: { payload },
+        isAuthenticated: true,
+        errorMsg: "",
+        loading: false,
+      };
+    },
+    googleLoginInfoFail(state) {
+      return {
+        ...state,
+        errorMsg: "Login Failed",
+        isAuthenticated: false,
+        loading: false,
+      };
     },
   },
 });
 
-export const { getUserInfo, setUserInfo, googleLoginInfo, getUserInfoFail } =
-  userReducer.actions;
+export const {
+  getUserInfo,
+  setUserInfo,
+  googleLoginInfo,
+  getUserInfoFail,
+  userLogOut,
+  googleLoginInfoSuccess,
+  googleLoginInfoFail,
+} = userReducer.actions;
 
 export const appSelector = (state) => state.app;
 

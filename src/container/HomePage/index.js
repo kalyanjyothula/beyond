@@ -13,6 +13,7 @@ import {
   homePageSelector,
 } from "./reducer";
 import { appSelector } from "../App/reducer";
+import PageLoading from "../../components/Organism/PageLoading";
 
 function HomePage() {
   const { tripCards } = homePageData;
@@ -69,11 +70,10 @@ function HomePage() {
 
   const handleAddFavorite = (e, id) => {
     e.preventDefault();
-    console.log("Add Favorite", id);
     dispatch(addToFavoriteTrip(id));
   };
 
-  if (loading) return <div>Loading ...</div>;
+  if (loading) return <PageLoading />;
 
   return (
     <div>

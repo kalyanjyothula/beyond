@@ -1,19 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = {
+  loading: false,
+  loginInfo: "",
+  errorMsg: "",
+};
 
 const loginPageReducer = createSlice({
-  name: 'login',
+  name: "login",
   initialState: initialState,
   reducers: {
     userLogin(state, { payload }) {
-      console.log(state, payload);
+      return { ...state, loading: true, loginInfo: payload, errorMsg: "" };
     },
   },
 });
 
 export const { userLogin } = loginPageReducer.actions;
 
-export const loginSelector = (state) => state.login;
+export const loginPageSelector = (state) => state.loginPage;
 
 export default loginPageReducer.reducer;
