@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   favoriteTrips: [],
+  homepageData: [],
 };
 
 const homePageReducer = createSlice({
@@ -17,6 +18,20 @@ const homePageReducer = createSlice({
     },
     getFavoriteTripsFail(state, { payload }) {
       return { ...state };
+    },
+    getHomePageData(state) {
+      return { ...state, loading: true, errorMsg: "" };
+    },
+    getHomePageDataSuccess(state, { payload }) {
+      return {
+        ...state,
+        loading: false,
+        errorMsg: "",
+        homepageData: [...payload],
+      };
+    },
+    getHomePageDataFail(state) {
+      return { ...state, loading: false, errorMsg: "Something Went Wrong !" };
     },
     addToFavoriteTrip(state, { payload }) {
       if (!state.favoriteTrips.includes(payload)) {
@@ -35,6 +50,9 @@ export const {
   getFavoriteTrips,
   getFavoriteTripsFail,
   getFavoriteTripsSuccess,
+  getHomePageData,
+  getHomePageDataFail,
+  getHomePageDataSuccess,
 } = homePageReducer.actions;
 
 export const homePageSelector = (state) => state.homePage; // name of the reducer in store

@@ -3,21 +3,23 @@ import React, { useState, useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
 import Slider from "react-slick";
 import { TripCard, Header, Footer } from "../../components/Organism";
-import homePageData from "./../../data/homepage";
+// import homePageData from "./../../data/homepage";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./slick-custom.css";
 import {
   addToFavoriteTrip,
   getFavoriteTrips,
+  getHomePageData,
   homePageSelector,
 } from "./reducer";
 import { appSelector } from "../App/reducer";
 import PageLoading from "../../components/Organism/PageLoading";
+import defaultImage from "../../images/tripCards/nature/araku.jpeg";
 
 function HomePage() {
-  const { tripCards } = homePageData;
-  const categoryKeys = Object.keys(tripCards);
+  // const { tripCards } = homePageData;
+  // const categoryKeys = Object.keys(tripCards);
   const settings = {
     speed: 300,
     infinite: false,
@@ -47,7 +49,11 @@ function HomePage() {
   const { loading, isAuthenticated, userInfo } = useSelector(appSelector);
   const [searchText, setSearchText] = useState("");
 
-  const { favoriteTrips } = useSelector(homePageSelector);
+  const {
+    favoriteTrips,
+    homepageData,
+    loading: homeLoading,
+  } = useSelector(homePageSelector);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -56,6 +62,10 @@ function HomePage() {
       );
     }
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (homepageData?.length <= 0) dispatch(getHomePageData());
+  }, [dispatch]);
 
   const handleSearchTextChange = (e) => {
     e.stopPropagation();
@@ -73,7 +83,7 @@ function HomePage() {
     dispatch(addToFavoriteTrip(id));
   };
 
-  if (loading) return <PageLoading />;
+  if (loading || homeLoading) return <PageLoading />;
 
   return (
     <div>
@@ -101,33 +111,29 @@ function HomePage() {
         </div>
       </div>
       <div className="bg-primaryBackground pb-20">
-        {categoryKeys?.flatMap((item) => (
+        {homepageData?.map((item) => (
           <div
             className="px-10 py-1 onlyMobile:px-4 bg-primaryBackground"
             key={item}
           >
             <div className="py-2">
-              <h1 className="text-h7 font-one capitalize">
-                {tripCards[`${item}`].title}
-              </h1>
-              <p className="text-body pb-4 font-ubuntu">
-                {tripCards[item].description}
-              </p>
+              <h1 className="text-h7 font-one capitalize">{item.title}</h1>
+              <p className="text-body pb-4 font-ubuntu">{item.description}</p>
               <div className="relative">
                 <Slider {...settings}>
-                  {tripCards[item]?.data?.map(
-                    ({ id, image, title, description, likesCount, review }) => (
+                  {item?.data?.map(
+                    ({ _id, tripName, mdDescription, likes, review }) => (
                       <TripCard
-                        key={id}
-                        path={"/trip/" + id.split("/").join("-")}
-                        image={image}
-                        title={title}
-                        description={description}
-                        likesCount={likesCount}
+                        key={_id}
+                        path={"/trip/" + _id}
+                        image={defaultImage}
+                        title={tripName}
+                        description={mdDescription + mdDescription}
+                        likesCount={likes}
                         reviewCount={review}
-                        id={id}
-                        isFavorite={favoriteTrips.includes(id)}
-                        addFavorite={(e) => handleAddFavorite(e, id)}
+                        id={_id}
+                        isFavorite={favoriteTrips.includes(_id)}
+                        addFavorite={(e) => handleAddFavorite(e, _id)}
                         customStyles="2xl:max-w-[96%] lg:max-w-[96%] mb-4 min-h-[388px]"
                       />
                     )
@@ -135,25 +141,25 @@ function HomePage() {
                 </Slider>
               </div>
             </div>
-            {tripCards[item].banner && (
-              <div
-                className={`min-h-[100px] w-full  my-10 rounded-md ${
-                  tripCards[item].banner?.color
-                    ? tripCards[item].banner?.color
-                    : "bg-greenBackground"
-                }`}
-              >
-                <h1
-                  className="text-h7 text-white font-one 
-                  w-full py-6 px-10"
+            {item?.banner.length > 0 &&
+              item?.banner.map(({ title, color }) => (
+                <div
+                  key={title}
+                  className={`min-h-[100px] w-full  my-10 rounded-md ${
+                    color ? color : "bg-greenBackground"
+                  }`}
                 >
-                  {tripCards[item].banner?.title}
-                  <span className="text-body3 block text-right pr-2">
-                    - Team Beyond
-                  </span>
-                </h1>
-              </div>
-            )}
+                  <h1
+                    className="text-h7 text-white font-one 
+                  w-full py-6 px-10"
+                  >
+                    {title}
+                    <span className="text-body3 block text-right pr-2">
+                      - Team Beyond
+                    </span>
+                  </h1>
+                </div>
+              ))}
           </div>
         ))}
       </div>

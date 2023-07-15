@@ -6,6 +6,9 @@ import {
   getFavoriteTrips,
   getFavoriteTripsFail,
   getFavoriteTripsSuccess,
+  getHomePageData,
+  getHomePageDataFail,
+  getHomePageDataSuccess,
 } from "./reducer";
 
 export function* addToFavoriteTripAsync({ payload }) {
@@ -54,7 +57,26 @@ export function* getFavoriteTripsAsync({ payload }) {
   }
 }
 
+export function* getHomePageDataAsync() {
+  try {
+    const url = "/api/trip/homepage";
+    const {
+      data: { success, data },
+    } = yield call(axios, {
+      method: "GET",
+      url: url,
+    });
+    if (success) {
+      yield put(getHomePageDataSuccess(data));
+    } else yield put(getHomePageDataFail());
+  } catch (error) {
+    yield put(getHomePageDataFail());
+    console.log(error);
+  }
+}
+
 export const homePageSaga = [
   takeLatest(addToFavoriteTrip.type, addToFavoriteTripAsync),
   takeLatest(getFavoriteTrips.type, getFavoriteTripsAsync),
+  takeLatest(getHomePageData.type, getHomePageDataAsync),
 ];
