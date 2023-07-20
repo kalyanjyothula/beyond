@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // import PropTypes from 'prop-types';
 import { Link, useNavigate } from "react-router-dom";
 import { Header, Footer } from "../../components/Organism";
@@ -34,7 +34,7 @@ function SignupPage() {
     if (isAuthenticated) {
       navigate("/");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     if (errorMsg) toast.error(errorMsg);

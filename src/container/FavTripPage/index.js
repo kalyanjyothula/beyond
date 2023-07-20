@@ -59,7 +59,7 @@ function FavTripPage() {
     if (isAuthenticated) {
       dispatch(fetchUserFavTrips());
     }
-  }, [isAuthenticated]);
+  }, [dispatch, isAuthenticated]);
 
   const handleDeleteFavTrips = (e, id) => {
     e.stopPropagation();
@@ -71,85 +71,99 @@ function FavTripPage() {
     <div className="relative">
       <Header customStyles="shadow-md !bg-white z-60" />
       <div className="py-4 px-10 onlyMobile:px-4">
-        {favoriteTrips?.map(
-          ({ _id, image, tripName, mdDescription, likes, review }) => (
-            <FavTripCard
-              key={_id}
-              id={_id}
-              title={tripName}
-              description={mdDescription}
-              likesCount={likes}
-              image={imageUrl}
-              review={review}
-              showDelete={true}
-              handleDelete={(e) => handleDeleteFavTrips(e, _id)}
-              path={"/trip/" + _id}
-            />
+        {favoriteTrips.length > 0 ? (
+          favoriteTrips?.map(
+            ({ _id, image, tripName, mdDescription, likes, review }) => (
+              <FavTripCard
+                key={_id}
+                id={_id}
+                title={tripName}
+                description={mdDescription}
+                likesCount={likes}
+                image={imageUrl}
+                review={review}
+                showDelete={true}
+                handleDelete={(e) => handleDeleteFavTrips(e, _id)}
+                path={"/trip/" + _id}
+              />
+            )
           )
+        ) : (
+          <div className="h-[300px] text-h1 flex justify-center items-center">
+            No FavoriteTrips added !
+          </div>
         )}
       </div>
-      <div className="px-10 py-1 onlyMobile:px-4 bg-primaryBackground">
-        <div className="py-2">
-          <h1 className="text-h7 font-one">{`Similar Experiences`}</h1>
-          <p className="text-body pb-4 font-ubuntu">
-            {`Traveller's Choice for the best experience.`}
-          </p>
-          <div className="relative">
-            <Slider {...settings}>
-              {similarTrips?.map(
-                ({ _id, image, tripName, smDescription, likes, review }) => {
-                  if (!favoriteTripsIDs?.includes(_id))
-                    return (
-                      <TripCard
-                        key={_id}
-                        id={_id}
-                        path={"/trip/" + _id}
-                        image={imageUrl}
-                        title={tripName}
-                        description={smDescription}
-                        likesCount={likes}
-                        reviewCount={review}
-                        disableHeart
-                        customStyles="2xl:max-w-[96%] lg:max-w-[96%] mb-4 min-h-[388px]"
-                      />
-                    );
-                }
-              )}
-            </Slider>
+      {favoriteTrips.length > 0 ? (
+        <div className="px-10 py-1 onlyMobile:px-4 bg-primaryBackground">
+          <div className="py-2">
+            <h1 className="text-h7 font-one">{`Similar Experiences`}</h1>
+            <p className="text-body pb-4 font-ubuntu">
+              {`Traveller's Choice for the best experience.`}
+            </p>
+            <div className="relative">
+              <Slider {...settings}>
+                {similarTrips?.map(
+                  ({ _id, image, tripName, smDescription, likes, review }) => {
+                    if (!favoriteTripsIDs?.includes(_id))
+                      return (
+                        <TripCard
+                          key={_id}
+                          id={_id}
+                          path={"/trip/" + _id}
+                          image={imageUrl}
+                          title={tripName}
+                          description={smDescription}
+                          likesCount={likes}
+                          reviewCount={review}
+                          disableHeart
+                          customStyles="2xl:max-w-[96%] lg:max-w-[96%] mb-4 min-h-[388px]"
+                        />
+                      );
+                  }
+                )}
+              </Slider>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="px-10 py-1 onlyMobile:px-4 bg-primaryBackground">
-        <div className="py-2">
-          <h1 className="text-h7 font-one capitalize">{`recommended for You`}</h1>
-          <p className="text-body pb-4 font-ubuntu">
-            {`Traveller's Choice for the best experience.`}
-          </p>
-          <div className="relative">
-            <Slider {...settings}>
-              {recommendedTrips?.map(
-                ({ _id, image, tripName, smDescription, likes, review }) => {
-                  if (!favoriteTripsIDs?.includes(_id))
-                    return (
-                      <TripCard
-                        key={_id}
-                        id={_id}
-                        path={"/trip/" + _id}
-                        image={imageUrl}
-                        title={tripName}
-                        description={smDescription}
-                        likesCount={likes}
-                        reviewCount={review}
-                        disableHeart
-                        customStyles="2xl:max-w-[96%] lg:max-w-[96%] mb-4 min-h-[388px]"
-                      />
-                    );
-                }
-              )}
-            </Slider>
+      ) : (
+        ""
+      )}
+      {favoriteTrips.length > 0 ? (
+        <div className="px-10 py-1 onlyMobile:px-4 bg-primaryBackground">
+          <div className="py-2">
+            <h1 className="text-h7 font-one capitalize">{`recommended for You`}</h1>
+            <p className="text-body pb-4 font-ubuntu">
+              {`Traveller's Choice for the best experience.`}
+            </p>
+            <div className="relative">
+              <Slider {...settings}>
+                {recommendedTrips?.map(
+                  ({ _id, image, tripName, smDescription, likes, review }) => {
+                    if (!favoriteTripsIDs?.includes(_id))
+                      return (
+                        <TripCard
+                          key={_id}
+                          id={_id}
+                          path={"/trip/" + _id}
+                          image={imageUrl}
+                          title={tripName}
+                          description={smDescription}
+                          likesCount={likes}
+                          reviewCount={review}
+                          disableHeart
+                          customStyles="2xl:max-w-[96%] lg:max-w-[96%] mb-4 min-h-[388px]"
+                        />
+                      );
+                  }
+                )}
+              </Slider>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
       <Footer />
     </div>
   );

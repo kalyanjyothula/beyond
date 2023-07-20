@@ -4,6 +4,7 @@ import { homePageSaga } from "../container/HomePage/saga";
 import { signupPageSaga } from "../container/SignupPage/saga";
 import { loginPageSaga } from "../container/LoginPage/saga";
 import { favoriteTripPageSaga } from "../container/FavTripPage/saga";
+import { searchResultSaga } from "../container/SearchResultPage/saga";
 
 export function* watcherSaga() {
   // console.log(...AppSaga)
@@ -13,6 +14,7 @@ export function* watcherSaga() {
     ...signupPageSaga,
     ...loginPageSaga,
     ...favoriteTripPageSaga,
+    ...searchResultSaga,
   ]);
   // yield takeLatest(getUser.type, getUserSaga);
 }

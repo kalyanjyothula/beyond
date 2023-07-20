@@ -1,22 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// import React from 'react';
+import PropTypes from "prop-types";
 
-function Select({ label, options }) {
+function Select({ id, label, options, onChange }) {
   return (
-    <div className='w-full py-2'>
+    <div className="w-full py-2">
       <label
         htmlFor={label}
-        className='block text-body1 font-bold
-         text-gray-900 font-ubuntu py-2'
+        className="block text-body1 font-bold
+         text-gray-900 font-ubuntu py-2"
       >
         {label}
       </label>
       <select
         id={label}
-        className='bg-gray-50 border border-gray-300 text-gray-900 text-body1 
-        rounded-lg block w-full p-2.5'
+        name={id}
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-body1 
+        rounded-lg block w-full p-2.5"
+        onChange={onChange}
       >
-        <option selected>Choose {label}</option>
+        <option selected value="">
+          Choose {label}
+        </option>
         {options.map(({ id, itemName }) => (
           <option key={id} value={itemName}>
             {itemName}
@@ -30,6 +34,8 @@ function Select({ label, options }) {
 Select.propTypes = {
   label: PropTypes.string,
   options: PropTypes.array,
+  onChange: PropTypes.func,
+  id: PropTypes.string,
 };
 
 export default Select;

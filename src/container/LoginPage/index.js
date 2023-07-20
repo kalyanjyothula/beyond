@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Header, Footer } from "../../components/Organism";
 import {
@@ -31,7 +31,7 @@ function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated) navigate("/");
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   const handleInputChange = (e) => {
     e.preventDefault();

@@ -19,7 +19,7 @@ function App() {
   const { isAuthenticated } = useSelector(appSelector);
   useEffect(() => {
     if (!isAuthenticated) dispatch(getUserInfo());
-  }, [isAuthenticated]);
+  }, [dispatch, isAuthenticated]);
 
   return (
     <React.Fragment>

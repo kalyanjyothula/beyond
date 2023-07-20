@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AiOutlineHeart, AiOutlineMenu, AiOutlineUser } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { appSelector, userLogOut } from "../../../container/App/reducer";
+import {
+  appSelector,
+  userLogOut,
+  getSearchSuggestions,
+  getSearchSuggestionsFail,
+} from "../../../container/App/reducer";
 import { toast } from "react-toastify";
 
 function Header({
@@ -15,18 +20,41 @@ function Header({
   showSearch,
 }) {
   const [dropDownOpen, setDropDownOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleOpenDropDown = () => {
     setDropDownOpen((prev) => !prev);
   };
-  const { isAuthenticated } = useSelector(appSelector);
+  const { isAuthenticated, searchSuggestions } = useSelector(appSelector);
 
   const handleLogout = (e) => {
     e.preventDefault();
     toast.info("Logging out !");
     dispatch(userLogOut());
   };
+
+  const handleSearchTextChange = (e) => {
+    e.stopPropagation();
+    const { value } = e.target;
+    setSearchText(value);
+    setShowSuggestions(true);
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    dispatch(getSearchSuggestionsFail());
+    navigate(`/search/${searchText}`);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(dispatch(getSearchSuggestions(searchText)), 100);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [dispatch, searchText]);
 
   return (
     <div
@@ -55,15 +83,38 @@ function Header({
       {showSearch && (
         <form
           className="flex h-16 bg-white items-center border 
-          rounded-[45px] w-[50%] onlyMobile:w-[80%] px-4 gap-x-4 overflow-hidden"
+          rounded-[45px] w-[50%] onlyMobile:w-[80%] px-4 gap-x-4 relative"
+          onSubmit={handleOnSubmit}
         >
           <FiSearch className="h-6 w-6" />
           <input
             type="text"
             name="location"
+            value={searchText}
             placeholder="Where to ?"
-            className="h-full w-full focus:outline-none text-h8"
+            className="h-full w-full rounded-[45px]  focus:outline-none text-h8"
+            onChange={handleSearchTextChange}
           />
+          {searchSuggestions?.length > 0 && showSuggestions && (
+            <div
+              className="absolute top-16 left-10 w-[calc(100%-64px)]
+            border z-20 bg-white px-4 rounded-b-lg"
+            >
+              {searchSuggestions.map((text) => (
+                <p
+                  className="py-2 body-text1 font-bold cursor-pointer"
+                  key={text}
+                  onClick={() => {
+                    setSearchText(text);
+                    setShowSuggestions(false);
+                    navigate(`/search/${text}`);
+                  }}
+                >
+                  {text}
+                </p>
+              ))}
+            </div>
+          )}
         </form>
       )}
       <div className="flex items-center px-4 gap-x-1 backdrop-brightness-100">

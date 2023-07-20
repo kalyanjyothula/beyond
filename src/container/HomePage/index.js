@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 // import PropTypes from 'prop-types';
 import { FiSearch } from "react-icons/fi";
 import Slider from "react-slick";
@@ -13,7 +13,7 @@ import {
   getHomePageData,
   homePageSelector,
 } from "./reducer";
-import { appSelector } from "../App/reducer";
+import { appSelector, getSearchSuggestions } from "../App/reducer";
 import PageLoading from "../../components/Organism/PageLoading";
 import defaultImage from "../../images/tripCards/nature/araku.jpeg";
 
@@ -46,8 +46,10 @@ function HomePage() {
   };
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, isAuthenticated, userInfo } = useSelector(appSelector);
+  const { loading, isAuthenticated, userInfo, searchSuggestions } =
+    useSelector(appSelector);
   const [searchText, setSearchText] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const {
     favoriteTrips,
@@ -61,16 +63,17 @@ function HomePage() {
         getFavoriteTrips({ email: userInfo.email, token: userInfo.token })
       );
     }
-  }, [isAuthenticated]);
+  }, [dispatch, isAuthenticated, userInfo.email, userInfo.token]);
 
   useEffect(() => {
     if (homepageData?.length <= 0) dispatch(getHomePageData());
-  }, [dispatch]);
+  }, [dispatch, homepageData?.length]);
 
   const handleSearchTextChange = (e) => {
     e.stopPropagation();
     const { value } = e.target;
     setSearchText(value);
+    setShowSuggestions(true);
   };
 
   const handleOnSubmit = (e) => {
@@ -82,6 +85,13 @@ function HomePage() {
     e.preventDefault();
     dispatch(addToFavoriteTrip(id));
   };
+
+  useEffect(() => {
+    const timer = setTimeout(dispatch(getSearchSuggestions(searchText)), 100);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [dispatch, searchText]);
 
   if (loading || homeLoading) return <PageLoading />;
 
@@ -96,7 +106,8 @@ function HomePage() {
           <form
             onSubmit={handleOnSubmit}
             className="flex h-16 bg-white items-center 
-          rounded-[45px] w-[50%] onlyMobile:w-[80%] px-4 gap-x-4 overflow-hidden"
+          rounded-[45px] w-[50%] onlyMobile:w-[80%] px-4 gap-x-4 
+          relative"
           >
             <FiSearch className="h-6 w-6" />
             <input
@@ -105,8 +116,27 @@ function HomePage() {
               value={searchText}
               onChange={handleSearchTextChange}
               placeholder="Where to ?"
-              className="h-full w-full focus:outline-none text-h8"
+              className="h-full w-full focus:outline-none text-h8 rounded-[45px]"
             />
+            {searchSuggestions?.length > 0 && showSuggestions && (
+              <div
+                className="absolute top-16 left-10 w-[calc(100%-64px)]
+            border z-10 bg-white px-4 rounded-b-lg"
+              >
+                {searchSuggestions.map((text) => (
+                  <p
+                    className="py-2 body-text1 font-bold cursor-pointer"
+                    key={text}
+                    onClick={() => {
+                      setSearchText(text);
+                      setShowSuggestions(false);
+                    }}
+                  >
+                    {text}
+                  </p>
+                ))}
+              </div>
+            )}
           </form>
         </div>
       </div>
