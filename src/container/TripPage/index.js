@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Slider from "react-slick";
 import { Footer, Header, TripCard } from "../../components/Organism";
 // import tripData from "../../data/tripPage";
@@ -67,7 +67,7 @@ function TripPage() {
   const [directionServicesResponse, setDirectionsServiceResponse] =
     useState(null);
   const { isLoaded } = useJsApiLoader({
-    // googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
   });
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -78,18 +78,39 @@ function TripPage() {
     dispatch(getTripData(id));
   }, [id, dispatch]);
 
-  const updateCurrentLocation = async (pos) => {
-    setCurrentLocation({
-      lat: pos.coords.latitude,
-      lng: pos.coords.longitude,
-    });
-    const res = await calculateDistance(
-      pos.coords.latitude,
-      pos.coords.longitude,
-      [{ location: `17.4580388,82.8356112`, stopover: false }]
-    );
-    console.log(res);
-  };
+  const calculateDistance = useCallback(
+    // eslint-disable-next-line no-unused-vars
+    async (latitude, longitude, _waypoints = []) => {
+      const directionServices = new google.maps.DirectionsService();
+      const result = await directionServices.route({
+        // origin: `${latitude}${longitude}`,
+        origin: `17.686815,83.218483`,
+        destination: new window.google.maps.LatLng(18.3273, 82.8775),
+        travelMode: window.google.maps.TravelMode.DRIVING,
+        // waypoints: waypoints,
+        // optimizeWaypoints: true,
+      });
+      console.log(result, "result", directionServicesResponse);
+      if (result) setDirectionsServiceResponse(result);
+    },
+    [directionServicesResponse]
+  );
+
+  const updateCurrentLocation = useCallback(
+    async (pos) => {
+      setCurrentLocation({
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude,
+      });
+      const res = await calculateDistance(
+        pos.coords.latitude,
+        pos.coords.longitude,
+        [{ location: `17.4580388,82.8356112`, stopover: false }]
+      );
+      console.log(res);
+    },
+    [calculateDistance]
+  );
 
   useEffect(() => {
     if (navigator?.geolocation) {
@@ -101,25 +122,7 @@ function TripPage() {
         { enableHighAccuracy: true }
       );
     }
-  }, []);
-
-  // eslint-disable-next-line no-unused-vars
-  const calculateDistance = async (latitude, longitude, waypoints = []) => {
-    // eslint-disable-next-line no-undef
-    const directionServices = new google.maps.DirectionsService();
-    const result = await directionServices.route({
-      // origin: `${latitude}${longitude}`,
-      origin: `17.686815,83.218483`,
-      // eslint-disable-next-line no-undef
-      destination: new google.maps.LatLng(18.3273, 82.8775),
-      // eslint-disable-next-line no-undef
-      travelMode: google.maps.TravelMode.DRIVING,
-      // waypoints: waypoints,
-      // optimizeWaypoints: true,
-    });
-    console.log(result, "result", directionServicesResponse);
-    if (result) setDirectionsServiceResponse(result);
-  };
+  }, [updateCurrentLocation]);
 
   const padToTwoDigits = (num) => {
     return num.toString().padStart(2, 0);
