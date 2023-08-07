@@ -111,14 +111,14 @@ function SearchResultPage() {
             <PageLoading />
           ) : tripsData?.length > 0 ? (
             tripsData?.map(
-              ({ _id, tripName, mdDescription, likes, review }) => (
+              ({ _id, tripName, mdDescription, likes, review, cardImage }) => (
                 <FavTripCard
                   key={_id}
                   id={_id}
                   title={tripName}
                   description={mdDescription}
                   likesCount={likes}
-                  image={imageUrl}
+                  image={cardImage || imageUrl}
                   review={review}
                   // showDelete={true}
                   // handleDelete={(e) => handleDeleteFavTrips(e, _id)}

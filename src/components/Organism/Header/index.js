@@ -50,7 +50,10 @@ function Header({
   };
 
   useEffect(() => {
-    const timer = setTimeout(dispatch(getSearchSuggestions(searchText)), 100);
+    const timer = setTimeout(
+      () => dispatch(getSearchSuggestions(searchText)),
+      100
+    );
     return () => {
       clearInterval(timer);
     };

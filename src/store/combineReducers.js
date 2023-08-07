@@ -5,6 +5,8 @@ import signupPageReducer from "../container/SignupPage/reducer";
 import loginPageReducer from "../container/LoginPage/reducer";
 import favTripPageReducer from "../container/FavTripPage/reducer";
 import searchPageReducer from "../container/SearchResultPage/reducer";
+import tripPageReducer from "../container/TripPage/reducer";
+
 export const reducer = combineReducers({
   app: userReducer,
   homePage: homePageReducer,
@@ -12,4 +14,5 @@ export const reducer = combineReducers({
   loginPage: loginPageReducer,
   favTripPage: favTripPageReducer,
   searchPage: searchPageReducer,
+  tripPage: tripPageReducer,
 });

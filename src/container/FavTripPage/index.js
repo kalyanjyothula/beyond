@@ -73,14 +73,22 @@ function FavTripPage() {
       <div className="py-4 px-10 onlyMobile:px-4">
         {favoriteTrips.length > 0 ? (
           favoriteTrips?.map(
-            ({ _id, image, tripName, mdDescription, likes, review }) => (
+            ({
+              _id,
+              image,
+              tripName,
+              mdDescription,
+              likes,
+              review,
+              cardImage,
+            }) => (
               <FavTripCard
                 key={_id}
                 id={_id}
                 title={tripName}
                 description={mdDescription}
                 likesCount={likes}
-                image={imageUrl}
+                image={cardImage || imageUrl}
                 review={review}
                 showDelete={true}
                 handleDelete={(e) => handleDeleteFavTrips(e, _id)}
@@ -104,14 +112,22 @@ function FavTripPage() {
             <div className="relative">
               <Slider {...settings}>
                 {similarTrips?.map(
-                  ({ _id, image, tripName, smDescription, likes, review }) => {
+                  ({
+                    _id,
+                    image,
+                    tripName,
+                    smDescription,
+                    likes,
+                    review,
+                    cardImage,
+                  }) => {
                     if (!favoriteTripsIDs?.includes(_id))
                       return (
                         <TripCard
                           key={_id}
                           id={_id}
                           path={"/trip/" + _id}
-                          image={imageUrl}
+                          image={cardImage || imageUrl}
                           title={tripName}
                           description={smDescription}
                           likesCount={likes}
@@ -139,14 +155,22 @@ function FavTripPage() {
             <div className="relative">
               <Slider {...settings}>
                 {recommendedTrips?.map(
-                  ({ _id, image, tripName, smDescription, likes, review }) => {
+                  ({
+                    _id,
+                    // image,
+                    tripName,
+                    smDescription,
+                    likes,
+                    review,
+                    cardImage,
+                  }) => {
                     if (!favoriteTripsIDs?.includes(_id))
                       return (
                         <TripCard
                           key={_id}
                           id={_id}
                           path={"/trip/" + _id}
-                          image={imageUrl}
+                          image={cardImage || imageUrl}
                           title={tripName}
                           description={smDescription}
                           likesCount={likes}

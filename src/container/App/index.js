@@ -12,6 +12,7 @@ import FavTripPage from "../FavTripPage";
 import SearchResultPage from "../SearchResultPage";
 import TripPage from "../TripPage";
 import { appSelector, getUserInfo } from "./reducer";
+import ProfilePage from "../ProfilePage";
 // import "./App.css";
 
 function App() {
@@ -29,7 +30,9 @@ function App() {
         <Route path="/signup" element={<SignupPage />}></Route>
         <Route path="/fav-trips" element={<FavTripPage />}></Route>
         <Route path="/search/:key" element={<SearchResultPage />}></Route>
-        <Route path="/trip/:key" element={<TripPage />}></Route>
+        <Route path="/trip/:id" element={<TripPage />}></Route>
+        <Route path="/view/:id" element={<ProfilePage />}></Route>
+        <Route path="/profile" element={<ProfilePage />}></Route>
         <Route path="*" element={<div>404 Not Found</div>}></Route>
         {/* <Route path="/itemView/:id" element={<ItemView />}></Route> */}
       </Routes>

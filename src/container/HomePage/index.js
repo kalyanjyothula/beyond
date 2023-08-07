@@ -152,11 +152,18 @@ function HomePage() {
               <div className="relative">
                 <Slider {...settings}>
                   {item?.data?.map(
-                    ({ _id, tripName, mdDescription, likes, review }) => (
+                    ({
+                      _id,
+                      tripName,
+                      mdDescription,
+                      likes,
+                      review,
+                      cardImage,
+                    }) => (
                       <TripCard
                         key={_id}
                         path={"/trip/" + _id}
-                        image={defaultImage}
+                        image={cardImage || defaultImage}
                         title={tripName}
                         description={mdDescription + mdDescription}
                         likesCount={likes}

@@ -29,3 +29,8 @@
   background: transparent;
   border: none;
 }
+
+.map-container {
+  width: 100%;
+  height: inherit;
+}

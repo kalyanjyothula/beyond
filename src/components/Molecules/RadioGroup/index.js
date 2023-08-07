@@ -11,7 +11,7 @@ function RadioGroup({ label, options, handleSelect }) {
             <input
               id={id}
               type="radio"
-              value={label}
+              value={label === "clear" ? "" : label}
               name={groupName}
               className="w-4 h-4 text-blue-600
                 bg-gray-100 border-gray-300 cursor-pointer"
