@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from "react";
+import PropTypes from "prop-types";
 
 function RangeSlider({ min, max, steps }) {
   const [rangeValue, setRangeValue] = useState(0);
@@ -8,10 +8,10 @@ function RangeSlider({ min, max, steps }) {
     console.log(rangeValue);
   };
   return (
-    <div className='py-2'>
+    <div className="py-2">
       <label
-        htmlFor='steps-range'
-        className='block mb-4 text-body1 font-bold text-gray-900  font-ubuntu'
+        htmlFor="steps-range"
+        className="block mb-4 text-body1 font-bold text-gray-900  font-ubuntu"
       >
         Budget Range
       </label>
@@ -20,8 +20,8 @@ function RangeSlider({ min, max, steps }) {
         fare &lt; <span className='font-bold'>{rangeValue}</span>
       </p> */}
       <input
-        id='steps-range'
-        type='range'
+        id="steps-range"
+        type="range"
         min={min || 0}
         max={max || 50000}
         onChange={handleRangeChange}
