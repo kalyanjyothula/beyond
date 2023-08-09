@@ -311,6 +311,10 @@ const data = {
       },
     ],
   },
+  signupQuote: `Embark on your wanderlust-filled odyssey today and unlock a realm
+  of incredible destinations by joining our travel community.`,
+  loginQuote: `Unlock a world of endless adventures with just a click, as you
+  embark on a captivating journey through our travel portal`,
 };
 
 export default data;
