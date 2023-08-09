@@ -78,6 +78,7 @@ function TripPage() {
     dispatch(getTripData(id));
   }, [id, dispatch]);
 
+  // eslint-disable-next-line no-unused-vars
   const calculateDistance = useCallback(
     // eslint-disable-next-line no-unused-vars
     async (latitude, longitude, _waypoints = []) => {
@@ -96,21 +97,18 @@ function TripPage() {
     [directionServicesResponse]
   );
 
-  const updateCurrentLocation = useCallback(
-    async (pos) => {
-      setCurrentLocation({
-        lat: pos.coords.latitude,
-        lng: pos.coords.longitude,
-      });
-      const res = await calculateDistance(
-        pos.coords.latitude,
-        pos.coords.longitude,
-        [{ location: `17.4580388,82.8356112`, stopover: false }]
-      );
-      console.log(res);
-    },
-    [calculateDistance]
-  );
+  const updateCurrentLocation = useCallback(async (pos) => {
+    setCurrentLocation({
+      lat: pos.coords.latitude,
+      lng: pos.coords.longitude,
+    });
+    // const res = await calculateDistance(
+    //   pos.coords.latitude,
+    //   pos.coords.longitude,
+    //   [{ location: `17.4580388,82.8356112`, stopover: false }]
+    // );
+    // console.log(res);
+  }, []);
 
   useEffect(() => {
     if (navigator?.geolocation) {
