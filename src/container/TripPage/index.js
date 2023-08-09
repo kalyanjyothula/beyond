@@ -67,7 +67,7 @@ function TripPage() {
   const [directionServicesResponse, setDirectionsServiceResponse] =
     useState(null);
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+    googleMapsApiKey: "Hi" || process.env.REACT_APP_GOOGLE_API_KEY,
   });
   const { id } = useParams();
   const dispatch = useDispatch();

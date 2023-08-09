@@ -15,7 +15,7 @@ import {
 } from "./reducer";
 import { appSelector, getSearchSuggestions } from "../App/reducer";
 import PageLoading from "../../components/Organism/PageLoading";
-import defaultImage from "../../images/tripCards/nature/araku.jpeg";
+// import defaultImage from "../../images/tripCards/nature/araku.jpeg";
 
 function HomePage() {
   // const { tripCards } = homePageData;
@@ -67,7 +67,7 @@ function HomePage() {
 
   useEffect(() => {
     if (homepageData?.length <= 0) dispatch(getHomePageData());
-  }, [dispatch, homepageData?.length]);
+  }, [dispatch, homepageData]);
 
   const handleSearchTextChange = (e) => {
     e.stopPropagation();
@@ -87,7 +87,10 @@ function HomePage() {
   };
 
   useEffect(() => {
-    const timer = setTimeout(dispatch(getSearchSuggestions(searchText)), 100);
+    const timer = setTimeout(
+      () => dispatch(getSearchSuggestions(searchText)),
+      100
+    );
     return () => {
       clearInterval(timer);
     };
@@ -144,7 +147,7 @@ function HomePage() {
         {homepageData?.map((item) => (
           <div
             className="px-10 py-1 onlyMobile:px-4 bg-primaryBackground"
-            key={item}
+            key={item._id}
           >
             <div className="py-2">
               <h1 className="text-h7 font-one capitalize">{item.title}</h1>
@@ -163,7 +166,7 @@ function HomePage() {
                       <TripCard
                         key={_id}
                         path={"/trip/" + _id}
-                        image={cardImage || defaultImage}
+                        image={cardImage}
                         title={tripName}
                         description={mdDescription + mdDescription}
                         likesCount={likes}
