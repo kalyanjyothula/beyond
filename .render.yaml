@@ -1,0 +1,9 @@
+services:
+  - name: web
+    env: web
+    port: 3000 # Replace with the actual port your app listens on
+    routes:
+      - path: /
+        handle:
+          command: start
+          web: nginx.conf # Path to your custom Nginx configuration file
