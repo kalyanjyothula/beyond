@@ -2,7 +2,7 @@
   "name": "beyond",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:4001",
+  "proxy": "https://beyond-api.onrender.com",
   "dependencies": {
     "@react-google-maps/api": "^2.19.0",
     "@react-oauth/google": "^0.11.0",
