@@ -160,7 +160,7 @@ function TripPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="flex-1 relative">
+              <div className="flex-1 relative onlyMobile:hidden">
                 <Link
                   to={`/view/${id}`}
                   className=" text-h7 text-center absolute inset-0 h-full
@@ -211,7 +211,7 @@ function TripPage() {
                     Route : {index + 1}
                   </div>
                   <div className="flex gap-2 items-end flex-wrap px-4">
-                    <div className="flex gap-x-2 items-center py-6 onlyMobile:flex-wrap">
+                    <div className="flex gap-x-2 items-center py-2 lg:py-6 onlyMobile:flex-wrap">
                       <div className="text-h8 text-red-500 ">Your Location</div>
 
                       <div className="flex gap-2 onlyMobile:my-2">
@@ -247,7 +247,7 @@ function TripPage() {
                       ) => (
                         <div
                           key={arrival + index}
-                          className="flex gap-x-2 items-center py-6 onlyMobile:flex-wrap"
+                          className="flex gap-x-2 items-center py-2 lg:py-6 onlyMobile:flex-wrap"
                         >
                           <div className="text-h8 text-red-500 ">{arrival}</div>
                           {distance && travelTime ? (
